@@ -38,28 +38,28 @@ Aceasta comanda face acelasi lucru ca cea precedentă, dar directorul țintă es
 
 Git are câteva protocoale de transfer diferite pe care le puteți utiliza. Exemplul anterior utilizează protocolul `git://`, dar ați putea vedea, de asemenea `http(s)://` sau `user@server:/path.git`, care utilizează protocolul de transfer SSH. *Capitolul 4* va introduce toate opțiunile disponibile pe care serverul le poate folosi pentru a vă permite accesul la repository-ul dumneavoastră Git și argumentele pro și contra pentru fiecare.
 
-## Recording Changes to the Repository ##
+## Înregistrarea schimbărilor în repository ##
 
-You have a bona fide Git repository and a checkout or working copy of the files for that project. You need to make some changes and commit snapshots of those changes into your repository each time the project reaches a state you want to record.
+Acum aveți un repository Git de încredere și o versiune sau o copie de lucru a fișierelor pentru acest proiect. Faceți câteva schimbări și apoi commit pentru a le înregistra un instantaneu în repository de fiecare dată când proiectul ajunge într-o stare care doriți să fie persistentă.
 
-Remember that each file in your working directory can be in one of two states: *tracked* or *untracked*. *Tracked* files are files that were in the last snapshot; they can be *unmodified*, *modified*, or *staged*. *Untracked* files are everything else — any files in your working directory that were not in your last snapshot and are not in your staging area.  When you first clone a repository, all of your files will be tracked and unmodified because you just checked them out and haven’t edited anything.
+Amintiți-vă că fiecare fișier în directorul de lucru poate fi în una din cele două stări: *tracked* sau *untracked*. Fișierele *tracked* sunt fișiere care au fost în ultimul instantaneu; ele pot fi *nemodificat*, *modificat*, sau *staged*. Fișierele *untracked* sunt fișierele care nu sunt intr-una din stările enumerate - toate fișierele din directorul de lucru, care nu au fost în ultimul instantaneu și nu sunt în zona de așteptare (staging area [en]). Când clonați pentru prima dată un repository, toate fișierele vor fi tracked și unmodified pentru că tocmai au fost aduse din repository și nu au fost modificate cu nimic.
 
-As you edit files, Git sees them as modified, because you’ve changed them since your last commit. You *stage* these modified files and then commit all your staged changes, and the cycle repeats. This lifecycle is illustrated in Figure 2-1.
+Pe măsură ce editați fișiere, Git le vede ca modificate, pentru că sunt schimbate față de ultimul commit. Apoi faceți *stage* acestor fișiere modificate și apoi commit tuturor modificărilor planificate, și ciclul se repetă. Acest ciclul de viață, este ilustrată în figura 2-1.
 
 Insert 18333fig0201.png
-Figure 2-1. The lifecycle of the status of your files.
+Figure 2-1. Ciclul de viață al stării fișierelor.
 
-### Checking the Status of Your Files ###
+### Verificarea stării fișierelor ###
 
-The main tool you use to determine which files are in which state is the `git status` command. If you run this command directly after a clone, you should see something like this:
+Instrumentul principal pe care îl veți utiliza pentru a determina ce fișiere sunt în ce stare, este comanda `git status`. Dacă rulați această comandă direct după o clona, ar trebui să vedeți ceva de genul:
 
 	$ git status
 	On branch master
 	nothing to commit, working directory clean
 
-This means you have a clean working directory — in other words, no tracked files are modified. Git also doesn’t see any untracked files, or they would be listed here. Finally, the command tells you which branch you’re on. For now, that is always `master`, which is the default; you won’t worry about it here. The next chapter will go over branches and references in detail.
+Acest lucru înseamnă că aveți un director de lucru curat - cu alte cuvinte, niciun fișier *tracked* nu este modificat. Git, de asemenea, nu se vedea nici un fișier untracked, sau în caz contrar fișierele untracked vor fi listate aici. În cele din urmă, comanda vă spune care este branch-ul curent. Pentru moment, acest branch este `master`, care este implicit; nu va faceți griji despre asta acum. Capitolul următor va trata branch-urile și referințele în detaliu.
 
-Let’s say you add a new file to your project, a simple `README` file. If the file didn’t exist before, and you run `git status`, you see your untracked file like so:
+Să presupunem că adăugați un nou fișier în proiectul dumneavoastră, un simplu `README`. Daca fisierul nu exista înainte, și rulați `git status`, veți vedea fișierul untracked astfel:
 
 	$ vim README
 	$ git status
@@ -71,7 +71,7 @@ Let’s say you add a new file to your project, a simple `README` file. If the f
 
 	nothing added to commit but untracked files present (use "git add" to track)
 
-You can see that your new `README` file is untracked, because it’s under the “Untracked files” heading in your status output. Untracked basically means that Git sees a file you didn’t have in the previous snapshot (commit); Git won’t start including it in your commit snapshots until you explicitly tell it to do so. It does this so you don’t accidentally begin including generated binary files or other files that you did not mean to include. You do want to start including README, so let’s start tracking the file.
+Puteți vedea că noul `README` este untracked, pentru că este în categoria "untracked files", din rezultatul comenzii anterioare. Untracked înseamnă în esență că Git vede un fișier care nu au avut un instantaneul anterior (commit); Git nu îl va include în comit imediat ci atunci când îi vom spune în mod explicit să facă acest lucru. Acest comportament vă ajută să nu adăugați accidental fișierele binare generate sau alte fișiere pe care nu doriți să le includeți. Acum dorim să începem urmărirea fișierului README, așa că începem urmărirea lui.
 
 ### Tracking New Files ###
 
